@@ -8,7 +8,6 @@ import { Switch } from '@/components/ui/switch'
 // import { useAuth } from '@/context/AuthProvider'
 import { useToast } from '@/hooks/use-toast'
 import { AcceptMessageSchema } from '@/schemas/acceptMessageSchema'
-import { ApiResponce } from '@/types/ApiResponce'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { Loader2, RefreshCcw } from 'lucide-react'
@@ -48,7 +47,7 @@ function Dashboard() {
         // setUser(newuser.data!)
     }
 
-    console.log("this is dashboard user ",user," hi")
+    // console.log("this is dashboard user ",user," hi")    
 
     // const user = null
 
@@ -151,13 +150,15 @@ function Dashboard() {
             })
         }
     }
-
+    let profileUrl
+    if(user)
+{
     const username = user.data.username
 
     const baseUrl = `${window.location.protocol}//${window.location.host}`
 
-    const profileUrl = `${baseUrl}/u/${username}`
-
+    profileUrl = `${baseUrl}/u/${username}`
+}
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(profileUrl)
