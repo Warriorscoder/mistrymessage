@@ -7,28 +7,30 @@ import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
 // import { useAuth } from '@/context/AuthProvider'
 import { useToast } from '@/hooks/use-toast'
-import { Message } from '@/model/User'
 import { AcceptMessageSchema } from '@/schemas/acceptMessageSchema'
 import { ApiResponce } from '@/types/ApiResponce'
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { Loader2, RefreshCcw } from 'lucide-react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import jwt from "jsonwebtoken"
 import Cookies from 'js-cookie';
 
+// interface newUser {
+//     data:User
+// }
 
 function Dashboard() {
 
-    const [messages, setMessages] = useState<Message[]>([])
+    const [messages, setMessages] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isSwitchLoading, setIsSwitchLoading] = useState(false)
     // const [user, setUser] = useState()
 
     const { toast } = useToast()
 
-    const handleDeleteMessage = (messageId: string) => {
+    const handleDeleteMessage = (messageId) => {
         setMessages(messages.filter((message) => message._id !== messageId))
     }
 
@@ -40,13 +42,13 @@ function Dashboard() {
         const secret = process.env.NEXT_PUBLIC_JWT_SECRET
         // console.log("this is dashboard token ",token," hi")
 
-        user = jwt.verify(token, secret!)
+        user = jwt.verify(token, secret)
 
         // console.log("this is dashboard newuser ",newuser.data," hi")
         // setUser(newuser.data!)
     }
 
-    // console.log("this is dashboard user ",user," hi")
+    console.log("this is dashboard user ",user," hi")
 
     // const user = null
 
@@ -71,7 +73,7 @@ function Dashboard() {
 
             setValue('acceptMessages', response.data.isAcceptingMessage)
         } catch (error) {
-            const axiosError = error as AxiosError<ApiResponce>;
+            const axiosError = error;
 
             toast({
                 title: 'Error',
@@ -85,7 +87,7 @@ function Dashboard() {
 
     }, [setValue])
 
-    const fetchMessages = useCallback(async (refresh: boolean = false) => {
+    const fetchMessages = useCallback(async (refresh = false) => {
 
         setIsLoading(true)
         setIsSwitchLoading(false)
@@ -103,7 +105,7 @@ function Dashboard() {
                 })
             }
         } catch (error) {
-            const axiosError = error as AxiosError<ApiResponce>;
+            const axiosError = error;
 
             toast({
                 title: 'Error',
@@ -140,7 +142,7 @@ function Dashboard() {
 
 
         } catch (error) {
-            const axiosError = error as AxiosError<ApiResponce>;
+            const axiosError = error;
 
             toast({
                 title: 'Error',
@@ -166,7 +168,7 @@ function Dashboard() {
         })
     }
 
-    if (!user || !user!)
+    if (!user)
         return <div>Please Login</div>
 
 
