@@ -128,7 +128,7 @@ function Dashboard() {
 
     const handleSwitchChange = async () => {
         try {
-            const response = await axios.post<ApiResponce>(`/api/accept-message?userId=${user.data._id}`, {
+            const response = await axios.post(`/api/accept-message?userId=${user.data._id}`, {
                 acceptMessages: !acceptMessages
             })
 
