@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/app/dashboard/page.js"  ],
+, "src/app/dashboard/page.js", "src/app/api/send-email/route.js"  ],
   "exclude": [
     "node_modules"
   ]

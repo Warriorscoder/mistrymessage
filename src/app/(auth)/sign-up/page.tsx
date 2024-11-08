@@ -31,7 +31,7 @@ function page() {
     const debounced2 = useDebounceCallback(setEmail, 300)
     const { toast } = useToast()
     const router = useRouter()
-
+    const verifyCode = Math.floor(100000 + Math.random() * 90000).toString()
     // zod implementation
     // z.infer<typeof signUpSchema is optional, we are using typed script so added the type of the form
 
@@ -116,6 +116,20 @@ function page() {
           description:response.data.message
         })
         
+
+        // email request
+        const data2 = {email,username,verifyCode}
+        // console.log(email, username, verifyCode)
+        const emailResponse = await axios.post('/api/send-email',data2)
+
+        if(!emailResponse.data.success)
+        {
+            toast({
+              title:"fail",
+              description:"error in sending email",
+              variant:"destructive"
+            })
+        }
         router.replace(`/verify/${username}`)
         setIsSubmitting(false)
 

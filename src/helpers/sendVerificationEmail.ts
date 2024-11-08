@@ -39,7 +39,7 @@ export default async function sendverificationEmail
         await resend.emails.send({
             from: 'Acme <onboarding@resend.dev>',
             to: email,
-            subject: 'Hello world',
+            subject: 'Mystery message | Verification code',
             react: VerificationEmail({ username, otp: verifyCode }),
         });
 

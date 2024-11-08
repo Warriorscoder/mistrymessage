@@ -15,6 +15,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import jwt from "jsonwebtoken"
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/router'
 
 // interface newUser {
 //     data:User
@@ -26,6 +28,7 @@ function Dashboard() {
     const [isLoading, setIsLoading] = useState(false)
     const [isSwitchLoading, setIsSwitchLoading] = useState(false)
     // const [user, setUser] = useState()
+    const router = useRouter()
 
     const { toast } = useToast()
 
@@ -43,11 +46,11 @@ function Dashboard() {
 
         user = jwt.verify(token, secret)
 
-        // console.log("this is dashboard newuser ",newuser.data," hi")
+        // console.log("this is dashboard newuser ",user.data," hi")
         // setUser(newuser.data!)
     }
 
-    // console.log("this is dashboard user ",user," hi")    
+    console.log("this is dashboard user ",user," hi")    
 
     // const user = null
 
@@ -55,6 +58,13 @@ function Dashboard() {
         console.warn("Token is missing");
     }
 
+    useEffect(() => {
+        if (!user.data.isVerified) {
+            // console.log(user.data.isVerified)
+            router.replace('/sign-in');
+        }
+    }, [user, router]);
+    
     const form = useForm({
         resolver: zodResolver(AcceptMessageSchema)
     })

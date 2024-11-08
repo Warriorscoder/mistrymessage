@@ -1,6 +1,8 @@
-import  sendverificationEmail  from "@/helpers/sendVerificationEmail";
+// import  sendverificationEmail  from "@/helpers/sendVerificationEmail";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";   
+// import { ApiResponce } from "@/types/ApiResponce";
+// import axios from "axios";
 import bcrypt from 'bcrypt' 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // const jwt = require('jsonwebtoken');
@@ -84,20 +86,23 @@ export async function POST(request:Request)
         }
         // send verification email
 
-        const emailResponse = await sendverificationEmail(
-            email, 
-            username,
-            verifyCode
-        )
+        // const emailResponse = await sendverificationEmail(
+        //     email, 
+        //     username,
+        //     verifyCode
+        // )
 
-        if(!emailResponse.success)
-        {
-            return Response.json({
-                success:false,
-                message:emailResponse.message,
-                token:false,
-            }, {status:500})
-        }
+        // const data = {email,username,verifyCode}
+        // const emailResponse = await axios.post('/api/send-email',data)
+
+        // if(!emailResponse.data.success)
+        // {
+        //     return Response.json({
+        //         success:false,
+        //         message:emailResponse.data.message,
+        //         token:false,
+        //     }, {status:500})
+        // }
 
         return Response.json({
             success:true,

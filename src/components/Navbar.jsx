@@ -35,9 +35,12 @@ function Navbar() {
                         <button className='w-full md:w-auto' onClick={signOut}>Logout</button>
                     </>
                 ) : (
+                    <>
+                    <span className='text-red-800 animate-pulse font-bold'>kindy use login credentials as email: aniketbharane2004@gmail.com, pw - 123456</span>
                     <Link href={'/sign-in'}>
                         <button className='w-full md:w-auto'>Login</button>
                     </Link>
+                    </>
                 )}
             </div>
         </nav>

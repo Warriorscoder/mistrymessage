@@ -22,13 +22,23 @@ import { useAuth } from "@/context/AuthProvider"
 function page() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const {setUser} = useAuth()
+  const {setUser, user} = useAuth()
   const { toast } = useToast()
   const router = useRouter()
 
 
   // zod implementation
   // z.infer<typeof signUpSchema is optional, we are using typed script so added the type of the form
+
+  useEffect(() => {
+    if (user && !user.isVerified) {
+      toast({
+        title: "Verify",
+        description: "Please verify your account. Check your email for the code.",
+        variant: "destructive",
+      });
+    }
+  }, [user, toast]);
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -115,6 +125,14 @@ function page() {
             </Link>
           </p>
         </div>
+        { user && !user?.isVerified && <div className="text-center">
+          <p>
+            Want to verify your account ?{' '}
+            <Link href={`/verify/${user?.username}`} className="text-blue-600 hover:text-blue-800">
+              Verify account
+            </Link>
+          </p>
+        </div>}
       </div>
     </div>
   )
